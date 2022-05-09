@@ -1,16 +1,18 @@
 import BookList from "../components/BookList";
 import BookForm from "../components/BookForm";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 import { useCollection } from "../hooks/useCollection";
 /** Not using realtime data:
  import { useState, useEffect } from "react";
  import { db } from "../firebase/config";
  import { collection, getDocs } from "firebase/firestore";
- 
  */
 
 export default function Home() {
-  const { documents: books } = useCollection("books");
+  const { user } = useAuthContext();
+  const { documents: books } = useCollection("books", ["uid", "==", user.uid]);
+
   /** Not using realtime data:
   const [books, setBooks] = useState(null);
 
